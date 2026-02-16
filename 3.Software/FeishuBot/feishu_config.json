@@ -1,0 +1,18 @@
+{
+  "app_id": "cli_your_app_id",
+  "app_secret": "your_app_secret",
+  "verification_token": "your_verification_token",
+  "encrypt_key": "",
+  "robot_serial_port": "COM3",
+  "robot_baud_rate": 115200,
+  "allowed_user_ids": ["ou_xxxx"],
+  "command_prefix": "/claw",
+  "safety_mode": true,
+  "max_speed_remote": 50,
+  "max_joint_step_deg": 30,
+  "feishu_api_base": "https://open.feishu.cn/open-apis",
+  "telemetry_channels": 35,
+  "telemetry_rate_hz": 10,
+  "log_file": "devclaw_feishu.log",
+  "heartbeat_interval_s": 30
+}
