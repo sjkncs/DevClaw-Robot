@@ -5,6 +5,10 @@
   "main": "electron/main.cjs",
   "author": "DevClaw Project",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sjkncs/DevClaw-Robot.git"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -59,6 +63,7 @@
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
-    }
+    },
+    "publish": null
   }
 }
