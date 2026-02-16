@@ -13,7 +13,7 @@
 > DevClaw Robot 在此基础上扩展了 7 个阶段的算法开发、43 条协议指令和飞书机器人集成。
 > 衷心感谢稚晖君对开源机器人社区的杰出贡献。详见 [`ATTRIBUTION.md`](ATTRIBUTION.md)。
 
-<img src="5.Docs/1.Images/dummy1.jpg" width="600" alt="DevClaw Robot"/>
+<img src="https://raw.githubusercontent.com/sjkncs/DevClaw-Robot/main/5.Docs/1.Images/dummy1.jpg" width="600" alt="DevClaw Robot"/>
 
 # 🦾 DevClaw Robot
 
@@ -494,7 +494,7 @@ python 3.Software/FeishuBot/feishu_bridge.py --config 3.Software/FeishuBot/feish
 </tr>
 </table>
 
-![DevClaw assembly](5.Docs/1.Images/case.png)
+![DevClaw assembly](https://raw.githubusercontent.com/sjkncs/DevClaw-Robot/main/5.Docs/1.Images/case.png)
 
 ---
 
