@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - os: windows-latest
@@ -31,6 +32,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+
+      - name: Install Python setuptools (for node-gyp)
+        if: runner.os == 'macOS'
+        run: pip3 install setuptools
 
       - name: Install dependencies
         working-directory: 3.Software/DevClawStudio
