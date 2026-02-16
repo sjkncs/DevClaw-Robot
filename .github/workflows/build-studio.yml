@@ -51,7 +51,12 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload artifacts
+      - name: List release output
+        working-directory: 3.Software/DevClawStudio/release
+        run: ls -la || dir
+        shell: bash
+
+      - name: Upload artifacts (installers only)
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact }}
@@ -59,8 +64,6 @@ jobs:
             3.Software/DevClawStudio/release/*.exe
             3.Software/DevClawStudio/release/*.dmg
             3.Software/DevClawStudio/release/*.AppImage
-            3.Software/DevClawStudio/release/*.deb
-            3.Software/DevClawStudio/release/*-unpacked/
 
   release:
     needs: build
@@ -70,20 +73,41 @@ jobs:
       contents: write
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
           path: artifacts/
+          merge-multiple: true
 
-      - name: List artifacts
-        run: find artifacts/ -type f | head -50
+      - name: List downloaded files
+        run: find artifacts/ -type f
 
-      - name: Create Release
+      - name: Upload to Release
         uses: softprops/action-gh-release@v2
         with:
+          name: "DevClaw Studio ${{ github.ref_name }}"
+          body: |
+            ## DevClaw Studio ${{ github.ref_name }}
+
+            Full desktop control app for DevClaw Robot — Electron + React + TailwindCSS
+
+            ### Features
+            - 43 protocol commands across 7 phases
+            - Serial port connection (node-serialport)
+            - Real-time joint telemetry charts
+            - Joint angle gauges, 8 control modes
+            - Dark theme with modern UI
+
+            ### Downloads
+            | Platform | File |
+            |----------|------|
+            | Windows x64 | `DevClaw Studio*.exe` |
+            | macOS arm64 | `DevClaw Studio*.dmg` |
+            | Linux x64 | `DevClaw Studio*.AppImage` |
           files: |
-            artifacts/**/*.exe
-            artifacts/**/*.dmg
-            artifacts/**/*.AppImage
-            artifacts/**/*.deb
-          generate_release_notes: true
+            artifacts/*.exe
+            artifacts/*.dmg
+            artifacts/*.AppImage
