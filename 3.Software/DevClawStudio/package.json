@@ -1,6 +1,6 @@
 {
   "name": "devclaw-studio",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "DevClaw Robot Desktop Control Studio — 43 commands, 7-phase algorithm control, real-time telemetry",
   "main": "electron/main.cjs",
   "author": {
