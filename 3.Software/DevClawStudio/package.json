@@ -45,7 +45,7 @@
       "output": "release"
     },
     "win": {
-      "target": ["dir"],
+      "target": ["portable"],
       "icon": "public/icon.png"
     },
     "mac": {

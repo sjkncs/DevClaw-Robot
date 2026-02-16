@@ -1,0 +1,80 @@
+name: Build DevClaw Studio
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: windows-latest
+            platform: win
+            artifact: DevClawStudio-windows-x64
+          - os: macos-latest
+            platform: mac
+            artifact: DevClawStudio-macos-arm64
+          - os: ubuntu-latest
+            platform: linux
+            artifact: DevClawStudio-linux-x64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: 3.Software/DevClawStudio
+        run: npm install
+
+      - name: Build Electron app
+        working-directory: 3.Software/DevClawStudio
+        run: npm run electron:build:${{ matrix.platform }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: |
+            3.Software/DevClawStudio/release/*.exe
+            3.Software/DevClawStudio/release/*.dmg
+            3.Software/DevClawStudio/release/*.AppImage
+            3.Software/DevClawStudio/release/*.deb
+            3.Software/DevClawStudio/release/*-unpacked/
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts/
+
+      - name: List artifacts
+        run: find artifacts/ -type f | head -50
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/**/*.exe
+            artifacts/**/*.dmg
+            artifacts/**/*.AppImage
+            artifacts/**/*.deb
+          generate_release_notes: true
